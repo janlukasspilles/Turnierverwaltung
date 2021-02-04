@@ -23,7 +23,7 @@ namespace Turnierverwaltung
         {
             Schussgeschwindigkeit = schussgeschwindigkeit;
         }
-        public Fussballspieler(string name, double schussgeschwindigkeit) : base(name)
+        public Fussballspieler(string name, double schussgeschwindigkeit, bool spieltAktiv) : base(name, spieltAktiv)
         {
             Schussgeschwindigkeit = schussgeschwindigkeit;
         }
