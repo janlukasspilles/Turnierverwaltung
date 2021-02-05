@@ -8,7 +8,7 @@ namespace Turnierverwaltung
 {
     public class Schiedsrichter : Teilnehmer
     {
-        #region Attributes
+        #region Attributes        
         #endregion
         #region Properties
         #endregion

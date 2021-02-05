@@ -9,26 +9,27 @@ namespace Turnierverwaltung
     public class Fussballspieler : Spieler
     {
         #region Attributes
-        private double _schussgeschwindigkeit;
+        private int _schussstaerke;
         #endregion
         #region Properties
-        public double Schussgeschwindigkeit { get => _schussgeschwindigkeit; set => _schussgeschwindigkeit = value; }
+        public int Schussstaerke { get => _schussstaerke; set => _schussstaerke = value; }
         #endregion
         #region Constructors
         public Fussballspieler()
         {
 
         }
-        public Fussballspieler(double schussgeschwindigkeit)
+        public Fussballspieler(int schussgeschwindigkeit)
         {
-            Schussgeschwindigkeit = schussgeschwindigkeit;
+            Schussstaerke = schussgeschwindigkeit;
         }
-        public Fussballspieler(string name, double schussgeschwindigkeit, bool spieltAktiv) : base(name, spieltAktiv)
+        public Fussballspieler(string name, int schussstaerke, bool spieltAktiv) : base(name, spieltAktiv)
         {
-            Schussgeschwindigkeit = schussgeschwindigkeit;
+            Schussstaerke = schussstaerke;
         }
         #endregion
         #region Methods
+        public 
         #endregion
     }
 }
