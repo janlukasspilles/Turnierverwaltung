@@ -45,7 +45,7 @@ namespace Turnierverwaltung
                 }
                 else if (t is Spieler)
                 {
-                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nAlter: {(t as Spieler).Alter}\r\nSpielt gerade: {((t as Spieler).SpieltAktiv ? "Ja" : "Nein")}\r\n\r\n";
+                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nAlter: {(t as Spieler).Alter}\r\nSpielt gerade: {((t as Spieler).SpieltAktiv ? "Ja" : "Nein")}\r\nGesundheitsstatus: {((t as Spieler).Verletzt ? "Verletzt" : "Gesund")}\r\n\r\n";
                 }
                 else
                 {

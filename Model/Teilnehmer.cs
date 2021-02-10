@@ -5,7 +5,7 @@
 //Beschreibung: Kümmert sich um den Programmablauf
 namespace Turnierverwaltung
 {
-    public class Teilnehmer
+    public abstract class Teilnehmer
     {
         #region Attributes
         private string _name;

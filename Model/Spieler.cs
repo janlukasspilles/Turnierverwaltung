@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Turnierverwaltung
 {
-    public class Spieler : Teilnehmer
+    public abstract class Spieler : Teilnehmer
     {
         #region Attributes      
         private bool _spieltAktiv;
