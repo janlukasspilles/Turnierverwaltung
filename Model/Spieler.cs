@@ -26,14 +26,17 @@ namespace Turnierverwaltung
             Name = "Testplayer";
             Rolle = "Spieler";
         }        
-        public Spieler(string name, bool spieltAktiv): base(name, "Spieler")
+        public Spieler(string name, bool spieltAktiv, int alter): base(name, "Spieler")
         {
             SpieltAktiv = spieltAktiv;
+            Alter = alter;
+            Verletzt = false;
         }
-        public Spieler(string name, bool spieltAktiv, bool verletzt) : base(name, "Spieler")
+        public Spieler(string name, bool spieltAktiv, bool verletzt, int alter) : base(name, "Spieler")
         {
             SpieltAktiv = spieltAktiv;
             Verletzt = verletzt;
+            Alter = alter;
         }
         #endregion
         #region Methods

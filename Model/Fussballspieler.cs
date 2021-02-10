@@ -19,17 +19,25 @@ namespace Turnierverwaltung
         {
 
         }
-        public Fussballspieler(int schussgeschwindigkeit)
+        public Fussballspieler(int schussstaerke)
         {
-            Schussstaerke = schussgeschwindigkeit;
+            Schussstaerke = schussstaerke;
         }
-        public Fussballspieler(string name, int schussstaerke, bool spieltAktiv) : base(name, spieltAktiv)
+        public Fussballspieler(string name, int schussstaerke, bool spieltAktiv, int alter) : base(name, spieltAktiv, alter)
         {
             Schussstaerke = schussstaerke;
         }
         #endregion
         #region Methods
-        public 
+        public double Schuss()
+        {
+            if (SpieltAktiv)
+            {
+                Random r = new Random();
+                return Schussstaerke * r.NextDouble();
+            }
+            throw new Exception("Spieler kann nicht schießen!");            
+        }
         #endregion
     }
 }

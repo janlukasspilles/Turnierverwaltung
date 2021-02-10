@@ -14,16 +14,15 @@ namespace Turnierverwaltung
         #endregion
         #region Properties
         public int JahreErfahrung { get => _jahreErfahrung; set => _jahreErfahrung = value; }
-        public string Mannschaft { get => _mannschaft; set => _mannschaft = value; }
         #endregion
         #region Constructors
         public Trainer()
         {
 
         }
-        public Trainer(string name, int JahreErfahrung, string mannschaft) : base(name, "Trainer")
+        public Trainer(string name, int jahreErfahrung) : base(name, "Trainer")
         {
-            Mannschaft = mannschaft;
+            JahreErfahrung = jahreErfahrung;
         }
         #endregion
         #region Methods

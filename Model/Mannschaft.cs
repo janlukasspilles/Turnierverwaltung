@@ -31,21 +31,21 @@ namespace Turnierverwaltung
         #region Methods
         public string AusgabeMannschaftsInformationen()
         {
-            Mitglieder = Mitglieder.OrderBy(o => o.GetType()).ToList();
-            string res = $"Mannschaft: {Name}\r\n";
+            Mitglieder.Sort((a, b) => a.GetType().FullName.CompareTo(b.GetType().FullName));
+            string res = $"Mannschaft: {Name}\r\n\r\n";
             foreach (Teilnehmer t in Mitglieder)
             {
                 if (t is Trainer)
                 {
-                    res += $"Trainername: {t.Name}\r\nSpielerfahrung in Jahren: {(t as Trainer).JahreErfahrung}\r\n";
+                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nSpielerfahrung in Jahren: {(t as Trainer).JahreErfahrung}\r\n\r\n";
                 }
                 else if (t is Physio)
                 {
-                    res += $"Physioname: {t.Name}\r\n";
+                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nLizenz: {(t as Physio).Lizenz} \r\n\r\n";
                 }
                 else if (t is Spieler)
                 {
-                    res += $"Spielername: {t.Name}\r\nAlter: {(t as Spieler).Alter}\r\nSpielt gerade: {((t as Spieler).SpieltAktiv ? "Ja" : "Nein")}\r\n";
+                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nAlter: {(t as Spieler).Alter}\r\nSpielt gerade: {((t as Spieler).SpieltAktiv ? "Ja" : "Nein")}\r\n\r\n";
                 }
                 else
                 {

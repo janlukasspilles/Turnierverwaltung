@@ -10,6 +10,7 @@ namespace Turnierverwaltung
     {
         static void Main(string[] args)
         {
+            Controller c = new Controller();
         }
     }
 }

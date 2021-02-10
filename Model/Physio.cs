@@ -9,9 +9,10 @@ namespace Turnierverwaltung
     public class Physio : Teilnehmer
     {
         #region Attributes
-        
+        private char _lizenz;
         #endregion
         #region Properties
+        public char Lizenz { get => _lizenz; set => _lizenz = value; }
         #endregion
         #region Constructors
         public Physio()
@@ -19,9 +20,9 @@ namespace Turnierverwaltung
 
         }
 
-        public Physio(string name) : base(name, "Physio")
+        public Physio(string name, char lizenz) : base(name, "Physio")
         {
-
+            Lizenz = lizenz;
         }
         #endregion
         #region Methods
