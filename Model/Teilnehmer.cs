@@ -34,9 +34,9 @@ namespace Turnierverwaltung
         }
         #endregion
         #region Methods
-        public string GetInformation()
+        public virtual string GetInformation()
         {
-            return Name;
+            return $"{GetType().Name}\r\nName: {Name}\r\n";
         }
         #endregion
     }

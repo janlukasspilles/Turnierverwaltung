@@ -30,6 +30,11 @@ namespace Turnierverwaltung
         {
             s.Verletzt = false;
         }
+
+        public override string GetInformation()
+        {
+            return base.GetInformation() + $"Lizenz: { Lizenz} \r\n\r\n";
+        }
         #endregion
     }
 }

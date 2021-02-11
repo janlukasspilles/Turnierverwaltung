@@ -36,7 +36,12 @@ namespace Turnierverwaltung
                 Random r = new Random();
                 return Schussstaerke * r.NextDouble();
             }
-            throw new Exception("Spieler kann nicht schießen!");            
+            throw new Exception("Spieler kann nicht schießen!");
+        }
+
+        public override string GetInformation()
+        {
+            return base.GetInformation() + $"Schussstärke: {Schussstaerke}\r\n\r\n";
         }
         #endregion
     }

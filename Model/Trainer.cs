@@ -10,10 +10,11 @@ namespace Turnierverwaltung
     {
         #region Attributes
         private int _jahreErfahrung;
-        private string _mannschaft;
+        private char _trainerLizenz;
         #endregion
         #region Properties
         public int JahreErfahrung { get => _jahreErfahrung; set => _jahreErfahrung = value; }
+        public char TrainerLizenz { get => _trainerLizenz; set => _trainerLizenz = value; }
         #endregion
         #region Constructors
         public Trainer()
@@ -26,6 +27,10 @@ namespace Turnierverwaltung
         }
         #endregion
         #region Methods
+        public override string GetInformation()
+        {
+            return base.GetInformation() + $"Spielerfahrung in Jahren: {JahreErfahrung}\r\n\r\n";
+        }
         #endregion
     }
 }

@@ -44,6 +44,11 @@ namespace Turnierverwaltung
         {
             SpieltAktiv = !SpieltAktiv;
         }
+
+        public override string GetInformation()
+        {            
+            return base.GetInformation() + $"Alter: { Alter}\r\nSpielt gerade: { (SpieltAktiv ? "Ja" : "Nein")}\r\nGesundheitsstatus: { (Verletzt ? "Verletzt" : "Gesund")}\r\n";
+        }
         #endregion
     }
 }

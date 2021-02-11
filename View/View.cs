@@ -18,7 +18,7 @@ namespace Turnierverwaltung
         #region Constructors
         public View()
         {
-            Splashinfo();
+            //Splashinfo();
         }
         #endregion
         #region Methods

@@ -35,22 +35,7 @@ namespace Turnierverwaltung
             string res = $"Mannschaft: {Name}\r\n\r\n";
             foreach (Teilnehmer t in Mitglieder)
             {
-                if (t is Trainer)
-                {
-                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nSpielerfahrung in Jahren: {(t as Trainer).JahreErfahrung}\r\n\r\n";
-                }
-                else if (t is Physio)
-                {
-                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nLizenz: {(t as Physio).Lizenz} \r\n\r\n";
-                }
-                else if (t is Spieler)
-                {
-                    res += $"{t.GetType().Name}\r\nName: {t.Name}\r\nAlter: {(t as Spieler).Alter}\r\nSpielt gerade: {((t as Spieler).SpieltAktiv ? "Ja" : "Nein")}\r\nGesundheitsstatus: {((t as Spieler).Verletzt ? "Verletzt" : "Gesund")}\r\n\r\n";
-                }
-                else
-                {
-                    //Nichts
-                }
+                res += t.GetInformation();                
             }
             return res;
         }
