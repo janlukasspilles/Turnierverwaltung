@@ -37,7 +37,10 @@ namespace Turnierverwaltung.Model
             return base.GetInformation() + $"Materialien:\r\n{resMats}\r\n\r\n";
         }
 
-        
+        public void MaterialAusgeben()
+        {
+
+        }
         #endregion
     }
 }
