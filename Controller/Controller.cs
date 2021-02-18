@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Turnierverwaltung.Model;
+using Turnierverwaltung.Model.Materialien;
+using Turnierverwaltung.Model.SpielerNS;
+using Turnierverwaltung.ViewNS;
 
-namespace Turnierverwaltung
+namespace Turnierverwaltung.ControllerNS
 {
     public class Controller
     {
@@ -28,13 +29,15 @@ namespace Turnierverwaltung
             Tennisspieler t = new Tennisspieler("Uwe", 50, true, 14);
             Trainer tr = new Trainer("Wilhelm", 30);
             Physio p = new Physio("Dennis", 'A');
+            Materialwart mat = new Materialwart("Frank", new List<Material>() { new Material("Fussball")});
 
             m.NeuesMannschaftsMitglied(f);
             m.NeuesMannschaftsMitglied(tr);
             m.NeuesMannschaftsMitglied(p);
             m.NeuesMannschaftsMitglied(h);
             m.NeuesMannschaftsMitglied(t);
-            view.TextEinlesen(m.AusgabeMannschaftsInformationen());
+            m.NeuesMannschaftsMitglied(mat);
+            view.TextEinlesen(m.GetInformation());
             view.TextAusgeben();
             Console.ReadKey(true);
         }

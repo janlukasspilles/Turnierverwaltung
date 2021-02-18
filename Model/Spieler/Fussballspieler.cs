@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Turnierverwaltung
+namespace Turnierverwaltung.Model.SpielerNS
 {
     public class Fussballspieler : Spieler
     {

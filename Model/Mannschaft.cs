@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Turnierverwaltung
+namespace Turnierverwaltung.Model
 {
     public class Mannschaft : Teilnehmer
     {
@@ -29,23 +29,24 @@ namespace Turnierverwaltung
         }
         #endregion
         #region Methods
-        public string AusgabeMannschaftsInformationen()
+        public new string GetInformation()
         {
-            Mitglieder.Sort((a, b) => a.GetType().FullName.CompareTo(b.GetType().FullName));
+            Mitglieder.Sort((a, b) => a.GetType().Name.CompareTo(b.GetType().Name));
             string res = $"Mannschaft: {Name}\r\n\r\n";
             foreach (Teilnehmer t in Mitglieder)
-            {
-                res += t.GetInformation();                
+            {                
+                res += t.GetInformation();
             }
             return res;
         }
 
         public void NeuesMannschaftsMitglied(Teilnehmer teilnehmer)
         {
-            if (teilnehmer is Trainer || teilnehmer is Spieler || teilnehmer is Physio)
-                Mitglieder.Add(teilnehmer);
+            if (teilnehmer is Schiedsrichter)
+                throw new Exception($"Ein {teilnehmer.GetType()} kann einer Mannschaft nicht beitreten!");  
             else
-                throw new Exception($"Ein {teilnehmer.GetType().ToString()} kann nicht einer Mannschaft beitreten!");
+                Mitglieder.Add(teilnehmer);
+
         }
 
         public Teilnehmer MitgliedVerlaesstMannschaft(string name)

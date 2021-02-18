@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Turnierverwaltung.Model
+namespace Turnierverwaltung.Model.Materialien
 {
-    public class WeitereAufgaben : Teilnehmer
+    public class Materialschuppen
     {
         #region Attributes
+        private List<Material> _materialien;
         #endregion
         #region Properties
+        public List<Material> Materialien { get => _materialien; set => _materialien = value; }
         #endregion
-        #region Constructors
+        #region Constructors        
         #endregion
         #region Methods
         #endregion

@@ -3,7 +3,7 @@
 //Datei:        Controller.cs
 //Datum:        19.11.2020
 //Beschreibung: Kümmert sich um den Programmablauf
-namespace Turnierverwaltung
+namespace Turnierverwaltung.Model
 {
     public abstract class Teilnehmer
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Turnierverwaltung
+namespace Turnierverwaltung.Model.SpielerNS
 {
     public class Tennisspieler : Spieler
     {
@@ -31,7 +31,7 @@ namespace Turnierverwaltung
         #region Methods
         public override string GetInformation()
         {
-            return base.GetInformation() + $"Wurfstärke: {SchlagStaerke}\r\n\r\n";
+            return base.GetInformation() + $"Schlagstärke: {SchlagStaerke}\r\n\r\n";
         }
         #endregion
     }

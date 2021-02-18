@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Turnierverwaltung
+namespace Turnierverwaltung.Model.SpielerNS
 {
     public abstract class Spieler : Teilnehmer
     {
@@ -25,8 +25,8 @@ namespace Turnierverwaltung
             SpieltAktiv = true;
             Name = "Testplayer";
             Rolle = "Spieler";
-        }        
-        public Spieler(string name, bool spieltAktiv, int alter): base(name, "Spieler")
+        }
+        public Spieler(string name, bool spieltAktiv, int alter) : base(name, "Spieler")
         {
             SpieltAktiv = spieltAktiv;
             Alter = alter;
@@ -46,7 +46,7 @@ namespace Turnierverwaltung
         }
 
         public override string GetInformation()
-        {            
+        {
             return base.GetInformation() + $"Alter: { Alter}\r\nSpielt gerade: { (SpieltAktiv ? "Ja" : "Nein")}\r\nGesundheitsstatus: { (Verletzt ? "Verletzt" : "Gesund")}\r\n";
         }
         #endregion

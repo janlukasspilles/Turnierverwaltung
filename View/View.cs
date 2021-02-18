@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Turnierverwaltung
+namespace Turnierverwaltung.ViewNS
 {
     public class View
     {
