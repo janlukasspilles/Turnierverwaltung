@@ -15,23 +15,24 @@ namespace Turnierverwaltung.Model.SpielerNS
         public int SchlagStaerke { get => _schlagStaerke; set => _schlagStaerke = value; }
         #endregion
         #region Constructors
-        public Tennisspieler()
+        public Tennisspieler(string vorname, string nachname) : base(vorname, nachname)
         {
-
-        }
-        public Tennisspieler(int schlagStaerke)
-        {
-            SchlagStaerke = schlagStaerke;
-        }
-        public Tennisspieler(string name, int schlagStaerke, bool spieltAktiv, int alter) : base(name, spieltAktiv, alter)
-        {
-            SchlagStaerke = schlagStaerke;
         }
         #endregion
         #region Methods
         public override string GetInformation()
         {
             return base.GetInformation() + $"Schlagstärke: {SchlagStaerke}\r\n\r\n";
+        }
+
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

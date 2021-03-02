@@ -21,9 +21,9 @@ namespace Turnierverwaltung.Model
 
         }
 
-        public Teilnehmer(string name, string rolle)
+        public Teilnehmer(string vorname, string nachname, string rolle)
         {
-            Name = name;
+            Name = nachname;
             Rolle = rolle;
         }
 
@@ -38,6 +38,9 @@ namespace Turnierverwaltung.Model
         {
             return $"{GetType().Name}\r\nName: {Name}\r\n";
         }
+
+        public abstract void Speichern();
+        public abstract void SelektionId(long id);
         #endregion
     }
 }

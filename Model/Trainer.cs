@@ -21,7 +21,7 @@ namespace Turnierverwaltung.Model
         {
 
         }
-        public Trainer(string name, int jahreErfahrung) : base(name, "Trainer")
+        public Trainer(string vorname, string nachname, int jahreErfahrung) : base(vorname, nachname, "Trainer")
         {
             JahreErfahrung = jahreErfahrung;
         }
@@ -30,6 +30,16 @@ namespace Turnierverwaltung.Model
         public override string GetInformation()
         {
             return base.GetInformation() + $"Spielerfahrung in Jahren: {JahreErfahrung}\r\n\r\n";
+        }
+
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -8,6 +8,10 @@ namespace Turnierverwaltung.Model
 {
     public class Schiedsrichter : Teilnehmer
     {
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
+        }
         #region Attributes        
         #endregion
         #region Properties
@@ -16,5 +20,9 @@ namespace Turnierverwaltung.Model
         #endregion
         #region Methods
         #endregion
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

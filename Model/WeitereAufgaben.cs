@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Turnierverwaltung.Model
 {
     public class WeitereAufgaben : Teilnehmer
-    {
+    {        
         #region Attributes
         #endregion
         #region Properties
@@ -16,5 +16,13 @@ namespace Turnierverwaltung.Model
         #endregion
         #region Methods
         #endregion
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

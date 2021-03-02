@@ -19,14 +19,14 @@ namespace Turnierverwaltung.Model
         {
             Mitglieder = new List<Teilnehmer>();
         }
-        public Mannschaft(string name) : base(name, "Mannschaft")
-        {
-            Mitglieder = new List<Teilnehmer>();
-        }
-        public Mannschaft(string name, List<Teilnehmer> mitglieder) : base(name, "Mannschaft")
-        {
-            Mitglieder = mitglieder;
-        }
+        //public Mannschaft(string name) : base(name, "Mannschaft")
+        //{
+        //    Mitglieder = new List<Teilnehmer>();
+        //}
+        //public Mannschaft(string name, List<Teilnehmer> mitglieder) : base(name, "Mannschaft")
+        //{
+        //    Mitglieder = mitglieder;
+        //}
         #endregion
         #region Methods
         public new string GetInformation()
@@ -65,6 +65,16 @@ namespace Turnierverwaltung.Model
                 }
             }
             throw new Exception("Kein Mitglied dieses Teams hat diesen Namen!");
+        }
+
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

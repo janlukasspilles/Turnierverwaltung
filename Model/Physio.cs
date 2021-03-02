@@ -21,20 +21,26 @@ namespace Turnierverwaltung.Model
 
         }
 
-        public Physio(string name, char lizenz) : base(name, "Physio")
+        public Physio(string vorname, string nachname, char lizenz) : base(vorname, nachname, "Physio")
         {
             Lizenz = lizenz;
         }
         #endregion
         #region Methods
-        public void SpielerFitMachen(Spieler s)
-        {
-            s.Verletzt = false;
-        }
 
         public override string GetInformation()
         {
             return base.GetInformation() + $"Lizenz: { Lizenz} \r\n\r\n";
+        }
+
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

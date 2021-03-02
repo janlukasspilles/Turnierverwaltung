@@ -21,7 +21,7 @@ namespace Turnierverwaltung.Model
             Materialien = new List<Material>();
         }
 
-        public Materialwart(string name, List<Material> materialien) : base(name, "Materialwart")
+        public Materialwart(string vorname, string nachname, List<Material> materialien) : base(vorname, nachname, "Materialwart")
         {
             Materialien = materialien;
         }
@@ -40,6 +40,16 @@ namespace Turnierverwaltung.Model
         public void MaterialAusgeben()
         {
 
+        }
+
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

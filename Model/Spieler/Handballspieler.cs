@@ -15,23 +15,24 @@ namespace Turnierverwaltung.Model.SpielerNS
         public int WurfStaerke { get => _wurfStaerke; set => _wurfStaerke = value; }
         #endregion
         #region Constructors
-        public Handballspieler()
+        public Handballspieler(string vorname, string nachname) : base(vorname, nachname)
         {
-
-        }
-        public Handballspieler(int wurfStaerke)
-        {
-            WurfStaerke = wurfStaerke;
-        }
-        public Handballspieler(string name, int wurfStaerke, bool spieltAktiv, int alter) : base(name, spieltAktiv, alter)
-        {
-            WurfStaerke = wurfStaerke;
         }
         #endregion
         #region Methods
         public override string GetInformation()
         {
             return base.GetInformation() + $"Wurfstärke: {WurfStaerke}\r\n\r\n";
+        }
+
+        public override void Speichern()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

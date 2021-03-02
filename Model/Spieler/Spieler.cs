@@ -9,46 +9,32 @@ namespace Turnierverwaltung.Model.SpielerNS
     public abstract class Spieler : Teilnehmer
     {
         #region Attributes      
-        private bool _spieltAktiv;
-        private int _alter;
-        private bool _verletzt;
+        private string _vorname;
+        private string _nachname;
+        private string _geburtstag;
+        private int _mannschaft_id;
         #endregion
         #region Properties
-        public bool SpieltAktiv { get => _spieltAktiv; set => _spieltAktiv = value; }
-        public int Alter { get => _alter; set => _alter = value; }
-        public bool Verletzt { get => _verletzt; set => _verletzt = value; }
+        public string Vorname { get => _vorname; set => _vorname = value; }
+        public string Nachname { get => _nachname; set => _nachname = value; }
+        public string Geburtstag { get => _geburtstag; set => _geburtstag = value; }
+        public int Mannschaft_id { get => _mannschaft_id; set => _mannschaft_id = value; }
         #endregion
         #region Constructors
-        public Spieler() : base()
+        public Spieler(string vorname, string nachname) : base(vorname, nachname, "Spieler")
         {
-            Verletzt = false;
-            SpieltAktiv = true;
-            Name = "Testplayer";
-            Rolle = "Spieler";
-        }
-        public Spieler(string name, bool spieltAktiv, int alter) : base(name, "Spieler")
-        {
-            SpieltAktiv = spieltAktiv;
-            Alter = alter;
-            Verletzt = false;
-        }
-        public Spieler(string name, bool spieltAktiv, bool verletzt, int alter) : base(name, "Spieler")
-        {
-            SpieltAktiv = spieltAktiv;
-            Verletzt = verletzt;
-            Alter = alter;
         }
         #endregion
         #region Methods
-        public void Wechsel()
-        {
-            SpieltAktiv = !SpieltAktiv;
-        }
+        
 
         public override string GetInformation()
         {
-            return base.GetInformation() + $"Alter: { Alter}\r\nSpielt gerade: { (SpieltAktiv ? "Ja" : "Nein")}\r\nGesundheitsstatus: { (Verletzt ? "Verletzt" : "Gesund")}\r\n";
+            return base.GetInformation();// + $"Alter: { Alter}\r\nSpielt gerade: { (SpieltAktiv ? "Ja" : "Nein")}\r\nGesundheitsstatus: { (Verletzt ? "Verletzt" : "Gesund")}\r\n";
         }
+
+        public abstract override void Speichern();
+        public abstract override void SelektionId(long id);
         #endregion
     }
 }
