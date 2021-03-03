@@ -9,36 +9,62 @@ namespace Turnierverwaltung.Model
 {
     public class Physio : Teilnehmer
     {
-        #region Attributes
-        private char _lizenz;
+        #region Attributes 
+        private string _vorname;
+        private string _nachname;
+        private string _geburtstag;
         #endregion
         #region Properties
-        public char Lizenz { get => _lizenz; set => _lizenz = value; }
-        #endregion
-        #region Constructors
-        public Physio()
+        public string Vorname
         {
-
+            get => _vorname;
+            set
+            {
+                _vorname = value;
+                Name = Vorname + " " + Nachname;
+            }
+        }
+        public string Nachname
+        {
+            get => _nachname;
+            set
+            {
+                _nachname = value;
+                Name = Vorname + " " + Nachname;
+            }
         }
 
-        public Physio(string vorname, string nachname, char lizenz) : base(vorname, nachname, "Physio")
+        public string Geburtstag { get => _geburtstag; set => _geburtstag = value; }
+        #endregion
+        #region Constructors
+        public Physio() : base()
         {
-            Lizenz = lizenz;
+
         }
         #endregion
         #region Methods
 
         public override string GetInformation()
         {
-            return base.GetInformation() + $"Lizenz: { Lizenz} \r\n\r\n";
+            return "";
         }
 
-        public override void Speichern()
+        public override bool Speichern()
         {
             throw new NotImplementedException();
         }
 
         public override void SelektionId(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Neuanlage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Loeschen()
         {
             throw new NotImplementedException();
         }

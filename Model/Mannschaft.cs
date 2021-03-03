@@ -24,22 +24,14 @@ namespace Turnierverwaltung.Model
         {
             Mitglieder = new List<Teilnehmer>();
         }
-        //public Mannschaft(string name) : base(name, "Mannschaft")
-        //{
-        //    Mitglieder = new List<Teilnehmer>();
-        //}
-        //public Mannschaft(string name, List<Teilnehmer> mitglieder) : base(name, "Mannschaft")
-        //{
-        //    Mitglieder = mitglieder;
-        //}
         #endregion
         #region Methods
-        public new string GetInformation()
+        public override string GetInformation()
         {
             Mitglieder.Sort((a, b) => a.GetType().Name.CompareTo(b.GetType().Name));
             string res = $"Mannschaft: {Name}\r\n\r\n";
             foreach (Teilnehmer t in Mitglieder)
-            {                
+            {
                 res += t.GetInformation();
             }
             return res;
@@ -48,7 +40,7 @@ namespace Turnierverwaltung.Model
         public void NeuesMannschaftsMitglied(Teilnehmer teilnehmer)
         {
             if (teilnehmer is Schiedsrichter)
-                throw new Exception($"Ein {teilnehmer.GetType()} kann einer Mannschaft nicht beitreten!");  
+                throw new Exception($"Ein {teilnehmer.GetType()} kann einer Mannschaft nicht beitreten!");
             else
                 Mitglieder.Add(teilnehmer);
 
@@ -72,11 +64,12 @@ namespace Turnierverwaltung.Model
             throw new Exception("Kein Mitglied dieses Teams hat diesen Namen!");
         }
 
-        public override void Speichern()
+        public override bool Speichern()
         {
-            string updateMannschaft = $"UPDATE SPIELER SET NAME='{Name}', STADT='{Stadt}', GRUENDUNGSJAHR='{Gruendungsjahr}' WHERE ID='{Id}'";            
+            bool res = true;
+            string updateMannschaft = $"UPDATE MANNSCHAFT SET NAME='{Name}', STADT='{Stadt}', GRUENDUNGSJAHR='{Gruendungsjahr}' WHERE ID='{Id}'";
 
-            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung2;Uid=user;Pwd=user;");
             Connection.Open();
 
             MySqlCommand command = new MySqlCommand
@@ -87,21 +80,22 @@ namespace Turnierverwaltung.Model
             try
             {
                 command.CommandText = updateMannschaft;
-                command.ExecuteNonQuery();
+                res = command.ExecuteNonQuery() == 1;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
+                res = false;
             }
             finally
             {
                 Connection.Close();
             }
+            return res;
         }
 
         public override void SelektionId(long id)
         {
-            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung2;Uid=user;Pwd=user;");
             try
             {
                 Connection.Open();
@@ -115,18 +109,53 @@ namespace Turnierverwaltung.Model
                     Id = reader.GetInt64("ID");
                     Name = reader.GetString("NAME");
                     Stadt = reader.GetString("STADT");
-                    Gruendungsjahr = reader.GetDateTime("GEBURTSTAG").ToString("yyyy-MM-dd");
+                    Gruendungsjahr = reader.GetDateTime("GRUENDUNGSJAHR").ToString("yyyy-MM-dd");
                 }
                 reader.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
             }
             finally
             {
                 Connection.Close();
             }
+        }
+
+        public override bool Neuanlage()
+        {
+            bool res = true;
+            string insertMannschaft = $"INSERT INTO MANNSCHAFT (NAME, STADT, GRUENDUNGSJAHR) VALUES ('{Name}', '{Stadt}', '{Gruendungsjahr}')";            
+
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung2;Uid=user;Pwd=user;");
+            Connection.Open();
+            //Transaction, da immer beide Tabellen ein Update benötigen. Wenn ein Update schief geht soll Rollback ausgeführt werden.            
+
+            MySqlCommand command = new MySqlCommand
+            {
+                Connection = Connection
+            };
+
+            try
+            {
+                command.CommandText = insertMannschaft;
+                res = command.ExecuteNonQuery() == 1;                
+                Id = command.LastInsertedId;
+            }
+            catch (Exception)
+            {
+                res = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return res;
+        }
+
+        public override bool Loeschen()
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

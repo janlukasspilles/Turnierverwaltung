@@ -94,18 +94,13 @@
     <Compile Include="Model\Spieler\Fussballspieler.cs" />
     <Compile Include="Model\Spieler\Handballspieler.cs" />
     <Compile Include="Model\Mannschaft.cs" />
-    <Compile Include="Model\Materialien\Materialschuppen.cs" />
-    <Compile Include="Model\Materialwart.cs" />
     <Compile Include="Model\Physio.cs" />
     <Compile Include="Model\Schiedsrichter.cs" />
     <Compile Include="Model\Spieler\Spieler.cs" />
-    <Compile Include="Model\Materialien\Material.cs" />
     <Compile Include="Model\Teilnehmer.cs" />
     <Compile Include="Model\Spieler\Tennisspieler.cs" />
     <Compile Include="Model\Trainer.cs" />
-    <Compile Include="Model\WeitereAufgaben.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\View.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

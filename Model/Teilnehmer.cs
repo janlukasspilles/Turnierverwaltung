@@ -8,42 +8,28 @@ namespace Turnierverwaltung.Model
     public abstract class Teilnehmer
     {
         #region Attributes
-        private string _name;
-        private string _rolle;
         private long _id;
+        private string _name;
         #endregion
         #region Properties
-        public string Name { get => _name; set => _name = value; }
-        public string Rolle { get => _rolle; set => _rolle = value; }
         public long Id { get => _id; set => _id = value; }
+        public string Name { get => _name; set => _name = value; }
         #endregion
         #region Constructors
         public Teilnehmer()
         {
-
-        }
-
-        public Teilnehmer(string vorname, string nachname, string rolle)
-        {
-            Name = nachname;
-            Rolle = rolle;
-        }
-
-        public Teilnehmer(Teilnehmer teilnehmer)
-        {
-            Name = teilnehmer.Name;
-            Rolle = teilnehmer.Rolle;
+            
         }
         #endregion
         #region Methods
         public virtual string GetInformation()
         {
-            return $"{GetType().Name}\r\nName: {Name}\r\n";
+            return $"Name: {Name}\r\n";
         }
-
-        public abstract void Speichern();
+        public abstract bool Speichern();
         public abstract void SelektionId(long id);
-        public abstract void Neuanlage();
+        public abstract bool Neuanlage();
+        public abstract bool Loeschen();        
         #endregion
     }
 }

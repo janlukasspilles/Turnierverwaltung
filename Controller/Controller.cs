@@ -1,52 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
 using Turnierverwaltung.Model;
-using Turnierverwaltung.Model.Materialien;
 using Turnierverwaltung.Model.SpielerNS;
-using Turnierverwaltung.ViewNS;
 
 namespace Turnierverwaltung.ControllerNS
 {
     public class Controller
     {
         #region Attributes
+        private List<Teilnehmer> _teilnehmer;
         #endregion
         #region Properties
+        public List<Teilnehmer> Teilnehmer { get => _teilnehmer; set => _teilnehmer = value; }
         #endregion
         #region Constructors
         public Controller()
         {
-            //Testdaten();
-            Fussballspieler f = new Fussballspieler();
-            f.SelektionId(1);
-            f.Nachname = f.Nachname + "Test";
-            f.AnzahlTore = f.AnzahlTore + 10;
-            f.Speichern();
+            Teilnehmer = new List<Teilnehmer>();
+            Fussballspieler f1 = new Fussballspieler
+            {
+                Vorname = "Peter",
+                Nachname = "Zwegat",
+                AnzahlTore = 10,
+                Geburtstag = "1996-11-19",
+                Mannschaft = "1. Fc Köln"
+            };
+            TeilnehmerHinzufuegen(f1);
+            f1.AnzahlTore = 11;
+            TeilnehmerAendern(f1);
+            TeilnehmerLoeschen(f1);
         }
         #endregion
         #region Methods
-        public void Testdaten()
+        public bool TeilnehmerHinzufuegen(Teilnehmer t)
         {
-            //View view = new View();
-            //Mannschaft m = new Mannschaft("Vfl Rheinbach");
-            //Fussballspieler f = new Fussballspieler("Hans", 50, true, 25);
-            //Handballspieler h = new Handballspieler("Peter", 50, true, 40);
-            //Tennisspieler t = new Tennisspieler("Uwe", 50, true, 14);
-            //Trainer tr = new Trainer("Wilhelm", 30);
-            //Physio p = new Physio("Dennis", 'A');
-            //Materialwart mat = new Materialwart("Frank", new List<Material>() { new Material("Fussball")});
-
-            //f.Speichern();
-
-            //m.NeuesMannschaftsMitglied(f);
-            //m.NeuesMannschaftsMitglied(tr);
-            //m.NeuesMannschaftsMitglied(p);
-            //m.NeuesMannschaftsMitglied(h);
-            //m.NeuesMannschaftsMitglied(t);
-            //m.NeuesMannschaftsMitglied(mat);
-            //view.TextEinlesen(m.GetInformation());
-            //view.TextAusgeben();
-            Console.ReadKey(true);
+            if (t.Neuanlage())
+            {
+                Teilnehmer.Add(t);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool TeilnehmerAendern(Teilnehmer t)
+        {
+            return t.Speichern();
+        }
+        public bool TeilnehmerLoeschen(Teilnehmer t)
+        {
+            if (t.Loeschen())
+            {
+                Teilnehmer.Remove(t);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public List<Teilnehmer> GetAlleTeilnehmer()
+        {
+            return _teilnehmer;
         }
         #endregion
     }

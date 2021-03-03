@@ -11,35 +11,45 @@ namespace Turnierverwaltung.Model.SpielerNS
     {
         #region Attributes
         private int _anzahlTore;
+
         #endregion
         #region Properties
         public int AnzahlTore { get => _anzahlTore; set => _anzahlTore = value; }
         #endregion
         #region Constructors
-        public Fussballspieler() : base("Dummy", "Dummy")
+        public Fussballspieler() : base()
         {
 
-        }
-        public Fussballspieler(string vorname, string nachname) : base(vorname, nachname)
-        {
-            
         }
         #endregion
         #region Methods
 
         public override string GetInformation()
         {
-            return base.GetInformation();// + $"Schussstärke: {Schussstaerke}\r\n\r\n";
+            return base.GetInformation();
         }
 
         public override void SelektionId(long id)
-        {            
-            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+        {
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung2;Uid=user;Pwd=user;");
             try
             {
                 Connection.Open();
 
-                string selektionstring = $"SELECT S.ID, FD.ANZAHL_TORE, S.VORNAME, S.NACHNAME, S.MANNSCHAFT_ID, S.GEBURTSTAG FROM SPIELER S JOIN FUSSBALLER_DETAILS FD ON S.ID = FD.SPIELER_ID WHERE S.ID = {id}";
+                string selektionstring = $"SELECT " +
+                    $"S.ID, " +
+                    $"FS.ANZAHL_TORE, " +
+                    $"S.VORNAME, " +
+                    $"S.NACHNAME, " +
+                    $"M.MANNSCHAFT, " +
+                    $"S.GEBURTSTAG " +
+                    $"FROM SPIELER S " +
+                    $"JOIN FUSSBALLSPIELER FS " +
+                    $"ON S.ID = FS.SPIELER_ID " +
+                    $"JOIN MANNSCHAFT M " +
+                    $"ON M.ID = S.MANNSCHAFT_ID " +
+                    $"WHERE S.ID = {id}";
+
                 MySqlCommand command = new MySqlCommand(selektionstring, Connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
@@ -49,16 +59,14 @@ namespace Turnierverwaltung.Model.SpielerNS
                     AnzahlTore = reader.GetInt32("ANZAHL_TORE");
                     Vorname = reader.GetString("VORNAME");
                     Nachname = reader.GetString("NACHNAME");
-                    Mannschaft_id = reader.GetInt32("MANNSCHAFT_ID");
+                    Mannschaft = reader.GetString("NAME");
                     Geburtstag = reader.GetDateTime("GEBURTSTAG").ToString("yyyy-MM-dd");
                 }
                 reader.Close();
             }
             catch (Exception e)
             {
-                #if DEBUG
                 Console.WriteLine(e.Message);
-                #endif
             }
             finally
             {
@@ -66,12 +74,13 @@ namespace Turnierverwaltung.Model.SpielerNS
             }
         }
 
-        public override void Speichern()
+        public override bool Speichern()
         {
-            string updateSpieler = $"UPDATE SPIELER SET VORNAME='{Vorname}', NACHNAME='{Nachname}', GEBURTSTAG='{Geburtstag}', MANNSCHAFT_ID='{Mannschaft_id}' WHERE ID='{Id}'";
-            string updateDetails = $"UPDATE FUSSBALLER_DETAILS SET ANZAHL_TORE='{AnzahlTore}' WHERE SPIELER_ID='{Id}'";
+            bool res = true;
+            string updateSpieler = $"UPDATE SPIELER SET VORNAME='{Vorname}', NACHNAME='{Nachname}', GEBURTSTAG='{Geburtstag}', MANNSCHAFT_ID=(SELECT M.ID FROM MANNSCHAFT M WHERE M.NAME='{Mannschaft}') WHERE ID='{Id}'";
+            string updateDetails = $"UPDATE FUSSBALLSPIELER SET ANZAHL_TORE='{AnzahlTore}' WHERE SPIELER_ID='{Id}'";
 
-            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung2;Uid=user;Pwd=user;");
             Connection.Open();
             //Transaction, da immer beide Tabellen ein Update benötigen. Wenn ein Update schief geht soll Rollback ausgeführt werden.
             MySqlTransaction transaction = Connection.BeginTransaction();
@@ -82,32 +91,34 @@ namespace Turnierverwaltung.Model.SpielerNS
                 Transaction = transaction
             };
 
-            
+
             try
             {
                 command.CommandText = updateSpieler;
-                command.ExecuteNonQuery();
+                res = command.ExecuteNonQuery() == 1;
                 command.CommandText = updateDetails;
-                command.ExecuteNonQuery();
+                res = res && (command.ExecuteNonQuery() == 1);
                 transaction.Commit();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 transaction.Rollback();
-                Console.WriteLine(e.Message);
+                res = false;
             }
             finally
             {
                 Connection.Close();
             }
+            return res;
         }
 
-        public override void Neuanlage()
+        public override bool Neuanlage()
         {
-            string insertSpieler = $"INSERT INTO SPIELER (VORNAME, NACHNAME, GEBURTSTAG, MANNSCHAFT_ID) VALUES ('{Vorname}', '{Nachname}', '{Geburtstag}', '{Mannschaft_id}')";
-            string insertFussballer = $"INSERT INTO FUSSBALLER_DETAILS (SPIELER_ID, ANZAHL_TORE) VALUES ('{Id}', '{AnzahlTore}')";
+            bool res = true;
+            string insertSpieler = $"INSERT INTO SPIELER (VORNAME, NACHNAME, GEBURTSTAG, MANNSCHAFT_ID) VALUES ('{Vorname}', '{Nachname}', '{Geburtstag}', (SELECT M.ID FROM MANNSCHAFT M WHERE M.NAME='{Mannschaft}'))";
 
-            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung2;Uid=user;Pwd=user;");
             Connection.Open();
             //Transaction, da immer beide Tabellen ein Update benötigen. Wenn ein Update schief geht soll Rollback ausgeführt werden.
             MySqlTransaction transaction = Connection.BeginTransaction();
@@ -121,21 +132,55 @@ namespace Turnierverwaltung.Model.SpielerNS
             try
             {
                 command.CommandText = insertSpieler;
-                command.ExecuteNonQuery();
+                res = command.ExecuteNonQuery() == 1;
                 Id = command.LastInsertedId;
+                string insertFussballer = $"INSERT INTO FUSSBALLSPIELER (SPIELER_ID, ANZAHL_TORE) VALUES ('{Id}', '{AnzahlTore}')";
                 command.CommandText = insertFussballer;
-                command.ExecuteNonQuery();
+                res = res && (command.ExecuteNonQuery() == 1);
                 transaction.Commit();
             }
             catch (Exception e)
             {
                 transaction.Rollback();
-                Console.WriteLine(e.Message);
+                res = false;
             }
             finally
             {
                 Connection.Close();
             }
+            return res;
+        }
+
+        public override bool Loeschen()
+        {
+            bool res = true;
+            string deleteSpieler = $"DELETE FROM SPIELER WHERE ID='{Id}'";
+
+            //Wird nicht benötigt, da Löschen über FK
+            //string deleteFussballer = $"DELETE FROM FUSSBALLSPIELER WHERE SPIELER_ID='{Id}'";
+
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung2;Uid=user;Pwd=user;");
+            Connection.Open();
+
+            MySqlCommand command = new MySqlCommand
+            {
+                Connection = Connection
+            };
+
+            try
+            {
+                command.CommandText = deleteSpieler;
+                res = command.ExecuteNonQuery() == 1;
+            }
+            catch (Exception)
+            {
+                res = false;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+            return res;
         }
     }
     #endregion
