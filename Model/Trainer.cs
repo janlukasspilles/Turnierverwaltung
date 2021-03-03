@@ -11,6 +11,7 @@ namespace Turnierverwaltung.Model
         #region Attributes
         private int _jahreErfahrung;
         private char _trainerLizenz;
+        private string _vorname;
         #endregion
         #region Properties
         public int JahreErfahrung { get => _jahreErfahrung; set => _jahreErfahrung = value; }

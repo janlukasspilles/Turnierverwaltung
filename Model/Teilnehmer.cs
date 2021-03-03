@@ -10,10 +10,12 @@ namespace Turnierverwaltung.Model
         #region Attributes
         private string _name;
         private string _rolle;
+        private long _id;
         #endregion
         #region Properties
         public string Name { get => _name; set => _name = value; }
         public string Rolle { get => _rolle; set => _rolle = value; }
+        public long Id { get => _id; set => _id = value; }
         #endregion
         #region Constructors
         public Teilnehmer()
@@ -41,6 +43,7 @@ namespace Turnierverwaltung.Model
 
         public abstract void Speichern();
         public abstract void SelektionId(long id);
+        public abstract void Neuanlage();
         #endregion
     }
 }

@@ -10,12 +10,10 @@ namespace Turnierverwaltung.Model.SpielerNS
     public class Fussballspieler : Spieler
     {
         #region Attributes
-        private long _id;
         private int _anzahlTore;
         #endregion
         #region Properties
         public int AnzahlTore { get => _anzahlTore; set => _anzahlTore = value; }
-        public long Id { get => _id; set => _id = value; }
         #endregion
         #region Constructors
         public Fussballspieler() : base("Dummy", "Dummy")
@@ -58,7 +56,9 @@ namespace Turnierverwaltung.Model.SpielerNS
             }
             catch (Exception e)
             {
-
+                #if DEBUG
+                Console.WriteLine(e.Message);
+                #endif
             }
             finally
             {
@@ -88,6 +88,42 @@ namespace Turnierverwaltung.Model.SpielerNS
                 command.CommandText = updateSpieler;
                 command.ExecuteNonQuery();
                 command.CommandText = updateDetails;
+                command.ExecuteNonQuery();
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        public override void Neuanlage()
+        {
+            string insertSpieler = $"INSERT INTO SPIELER (VORNAME, NACHNAME, GEBURTSTAG, MANNSCHAFT_ID) VALUES ('{Vorname}', '{Nachname}', '{Geburtstag}', '{Mannschaft_id}')";
+            string insertFussballer = $"INSERT INTO FUSSBALLER_DETAILS (SPIELER_ID, ANZAHL_TORE) VALUES ('{Id}', '{AnzahlTore}')";
+
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+            Connection.Open();
+            //Transaction, da immer beide Tabellen ein Update benötigen. Wenn ein Update schief geht soll Rollback ausgeführt werden.
+            MySqlTransaction transaction = Connection.BeginTransaction();
+
+            MySqlCommand command = new MySqlCommand
+            {
+                Connection = Connection,
+                Transaction = transaction
+            };
+
+            try
+            {
+                command.CommandText = insertSpieler;
+                command.ExecuteNonQuery();
+                Id = command.LastInsertedId;
+                command.CommandText = insertFussballer;
                 command.ExecuteNonQuery();
                 transaction.Commit();
             }

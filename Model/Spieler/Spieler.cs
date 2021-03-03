@@ -35,6 +35,7 @@ namespace Turnierverwaltung.Model.SpielerNS
 
         public abstract override void Speichern();
         public abstract override void SelektionId(long id);
+        public abstract override void Neuanlage();
         #endregion
     }
 }

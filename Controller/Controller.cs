@@ -16,10 +16,10 @@ namespace Turnierverwaltung.ControllerNS
         #region Constructors
         public Controller()
         {
-            Testdaten();
+            //Testdaten();
             Fussballspieler f = new Fussballspieler();
             f.SelektionId(1);
-            f.Nachname = f.Nachname + "Up";
+            f.Nachname = f.Nachname + "Test";
             f.AnzahlTore = f.AnzahlTore + 10;
             f.Speichern();
         }

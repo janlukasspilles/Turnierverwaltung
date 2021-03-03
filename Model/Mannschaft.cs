@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,13 @@ namespace Turnierverwaltung.Model
     {
         #region Attributes
         private List<Teilnehmer> _mitglieder;
+        private string _stadt;
+        private string _gruendungsjahr;
         #endregion
         #region Properties
         public List<Teilnehmer> Mitglieder { get => _mitglieder; set => _mitglieder = value; }
+        public string Stadt { get => _stadt; set => _stadt = value; }
+        public string Gruendungsjahr { get => _gruendungsjahr; set => _gruendungsjahr = value; }
         #endregion
         #region Constructors
         public Mannschaft()
@@ -69,12 +74,59 @@ namespace Turnierverwaltung.Model
 
         public override void Speichern()
         {
-            throw new NotImplementedException();
+            string updateMannschaft = $"UPDATE SPIELER SET NAME='{Name}', STADT='{Stadt}', GRUENDUNGSJAHR='{Gruendungsjahr}' WHERE ID='{Id}'";            
+
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+            Connection.Open();
+
+            MySqlCommand command = new MySqlCommand
+            {
+                Connection = Connection
+            };
+
+            try
+            {
+                command.CommandText = updateMannschaft;
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
         }
 
         public override void SelektionId(long id)
         {
-            throw new NotImplementedException();
+            MySqlConnection Connection = new MySqlConnection("Server=127.0.0.1;Database=turnierverwaltung;Uid=user;Pwd=user;");
+            try
+            {
+                Connection.Open();
+
+                string selektionstring = $"SELECT * FROM MANNSCHAFT WHERE ID = '{id}'";
+                MySqlCommand command = new MySqlCommand(selektionstring, Connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Id = reader.GetInt64("ID");
+                    Name = reader.GetString("NAME");
+                    Stadt = reader.GetString("STADT");
+                    Gruendungsjahr = reader.GetDateTime("GEBURTSTAG").ToString("yyyy-MM-dd");
+                }
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
         }
         #endregion
     }
